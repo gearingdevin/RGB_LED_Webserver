@@ -46,15 +46,14 @@ WiFiServer server(80);
 
 void setup() 
 {
-    //pinMode(LED_Pin, OUTPUT);     
+   
     FastLED.addLeds<CHIPSET, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS);
     Serial.begin(115200);
     Serial.println();
     Serial.println("Serial started at 115200");
     Serial.println("WebControlledLEDs starting...");
     Serial.println();
-    //pinMode(ledPin, OUTPUT);
-     // digitalWrite(ledPin, LOW);
+
     // Connect to a WiFi network
     Serial.print(F("Connecting to "));  Serial.println(ssid);
     WiFi.begin(ssid, pass);
@@ -89,17 +88,14 @@ void setup()
  
 void loop() 
 {
-    // Check if a client has connected
+
 
   if(counter >= 1){
      counter--;
     }
     
     WiFiClient client = server.available();
-//     if (client)  { 
-//      effect = "null";
-//      }
-//    
+
     if (!client)  { 
       if(effect != "null"){
         if(effect == "rainbow"){
@@ -111,16 +107,13 @@ void loop()
         }
       }
  
-    // Read the first line of the request
-    
-    //Serial.print("TEST: "); Serial.println(request.substring(6,10));
+
 
   request = client.readStringUntil('\r');
 
     Serial.print("request: "); Serial.println(request); 
     if       ( request.indexOf("LEDON") > 0 )  
              { 
-//                digitalWrite(LED_Pin, HIGH);  
                 for(int i=0; i<NUM_LEDS; i++){
                   leds[i] = CRGB( l_red, l_green, l_blue);
                   FastLED.setBrightness(l_brightness);
@@ -233,11 +226,6 @@ void loop()
      client.flush();
         client.print( header );
         String rawHtml= htmlGet();
-//        int l_red = 100;
-//        int l_green = 100;
-//        int l_blue = 100;
-//map(raw_level, 100, 355, 0, 255);
-//<input type="button" id = "LED_button" onclick="switchLED()" value="OFF" class=""  /> 
         int m_bright = map(l_brightness, 0, 255, 100, 355);
         int m_red = map(l_red, 0, 255, 100, 355);
         int m_green = map(l_green, 0, 255, 100, 355);
@@ -264,8 +252,8 @@ void loop()
  
  
   
-  // The client will actually be disconnected when the function returns and 'client' object is detroyed
-} // void loop()
+ 
+} 
 
 
 void setColorRGB(byte r, byte g, byte b) {
@@ -312,11 +300,6 @@ void rainbowCycle(int SpeedDelay) {
                 } 
                 }
 
-              //loop();
-             // continue;
-//              break;
-//              //i = NUM_LEDS;
-//              //j = 1280;
               }
         }
     delay(SpeedDelay);
